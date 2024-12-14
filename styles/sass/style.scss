@@ -191,6 +191,7 @@ header {
             color: inherit;
             font-weight: 500;
 
+            animation: slide-in-from-top 0.1s cubic-bezier(0.12, 0.64, 1, 1);
 
             img {
                 height: 1.25em;
@@ -255,6 +256,30 @@ header {
 
 
         }
+    }
+}
+
+@keyframes slide-in-from-top {
+    0% {
+        transform: translateY(-150%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-out-from-bottom {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-150%);
+        opacity: 0;
     }
 }
 
