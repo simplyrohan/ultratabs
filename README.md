@@ -28,3 +28,4 @@ Yes, I know that its terrible to put the built JS files for baremux, uv, and epo
       - [ ] Tab disguise
       - [ ] Colors
       - [ ] Search Engine
+- [ ] Move the UI to a UI module and that is the script root

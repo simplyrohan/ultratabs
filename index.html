@@ -11,19 +11,24 @@
     <link rel="stylesheet" href="styles/css/tablist.css">
     <link rel="stylesheet" href="styles/css/tabview.css">
 
+    <link rel="prefetch" href="/scram/scramjet.worker.js" />
+		<link rel="prefetch" href="/scram/scramjet.shared.js" />
+
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.2.nomodule.min.js"></script>
 
 
     <script src="/proxy/baremux/index.js" defer></script>
-    <script src="/proxy/epoxy/index.js" defer></script>
-    <script src="/uv/uv.bundle.js" defer></script>
-    <script src="/uv/uv.config.js" defer></script>
-    <script src="/proxy/register-sw.js" defer></script>
+    <!-- <script src="/proxy/epoxy/index.js" defer></script> -->
+    <!-- <script src="/uv/uv.bundle.js" defer></script> -->
+    <!-- <script src="/uv/uv.config.js" defer></script> -->
+    <!-- <script src="/proxy/register-sw.js" defer></script> -->
+    <script src="/scram/scramjet.controller.js"></script>
+    <script src="config.js"></script>
     <!-- <script src="proxy/search.js" defer></script> -->
     <!-- <script src="proxy/index.js" defer></script> -->
-    <script src="scripts/proxy.js" defer></script>
-    <script src="scripts/tabs.js" defer></script>
+    <!-- <script src="scripts/proxy.js" type="module" defer></script> -->
+    <script src="scripts/tabs.mjs" type="module" defer></script>
 
 </head>
 

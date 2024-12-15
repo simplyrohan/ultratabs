@@ -1,8 +1,11 @@
+import { saveTabs, loadTabs } from './save.mjs'
+import { getUV, search } from './proxy.mjs'
+
 const { span, iframe, button, img } = van.tags;
 const { tags: { "ion-icon": ionIcon } } = van;
 
-var tabs = [];
-var selectedTab = null;
+export var tabs = [];
+export var selectedTab = null;
 
 // Controls
 const pageBack = document.getElementById('page-back');
@@ -46,8 +49,9 @@ urlForm.onsubmit = async (e) => {
     selectedTab.view.src = await getUV(urlInput.value)
 }
 
+// -------------------------------------
 // Objects
-const tabItem = (tab) => {
+function tabItem(tab) {
     return button(
         {
             onclick: (e) => {
@@ -78,28 +82,29 @@ const tabItem = (tab) => {
                     setTimeout(() => {
                         tabList.removeChild(tab.item)
                         tab.item.remove()
-                    }, 100)
+                    }, 75)
 
-
+                    saveTabs(tabs)
                 }, class: 'close'
             },
             ionIcon({ name: 'close', class: 'close-icon' })
         ))
 }
 
-const tabFrame = (tab) => {
+function tabFrame(tab) {
     return iframe({
         class: 'tab-frame',
         src: tab.proxiedUrl,
         sandbox: 'allow-scripts allow-forms allow-same-origin',
         onload: (e) => {
             let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
-            let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+            // let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
+            let targetUrl = decodeURIComponent($scramjet.codec.decode(parts[parts.length - 1]))
 
             tab.title = tab.view.contentWindow.document.title
             console.log(tab.title)
-            tabList.children[tabs.indexOf(tab)].children[1].textContent = tab.title
-            tabList.children[tabs.indexOf(tab)].children[0].src = getFavicon(targetUrl)
+            tab.item.children[1].textContent = tab.title
+            tab.item.children[0].src = getFavicon(targetUrl)
 
             // Update URL bar
             if (tab == selectedTab) {
@@ -110,24 +115,26 @@ const tabFrame = (tab) => {
     })
 }
 
+// -------------------------------------
+
 function focusTab(tab) {
     if (selectedTab) {
         selectedTab.view.style.display = 'none'
-        tabList.children[tabs.indexOf(selectedTab)].classList.remove('selectedTab')
+        selectedTab.item.classList.remove('selectedTab')
     }
     selectedTab = tab
     tab.view.style.display = 'block'
 
     // Update URL bar
     urlInput.value = tab.url
-    tabList.children[tabs.indexOf(tab)].classList.add('selectedTab')
+    tab.item.classList.add('selectedTab')
 }
 
-function getFavicon(url) {
+export function getFavicon(url) {
     return 'https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=' + encodeURIComponent(url)
 }
 
-async function addTab(link) {
+export async function addTab(link) {
     let url;
 
     url = await getUV(link)
@@ -142,18 +149,18 @@ async function addTab(link) {
     tab.item = tabItem(tab)
 
     // Fix links such as the Gmail link in the Google search page
-    tab.view.addEventListener('load', () => {
-        let links = tab.view.contentWindow.document.querySelectorAll('a')
-        links.forEach(element => {
-            element.addEventListener("click", event => {
-                let isTargetTop = event.target.target === "_top";
-                if (isTargetTop) {
-                    event.preventDefault();
-                    addTab(event.target.href);
-                }
-            });
-        })
-    })
+    // tab.view.addEventListener('load', () => {
+    //     let links = tab.view.contentWindow.document.querySelectorAll('a')
+    //     links.forEach(element => {
+    //         element.addEventListener("click", event => {
+    //             let isTargetTop = event.target.target === "_top";
+    //             if (isTargetTop) {
+    //                 event.preventDefault();
+    //                 addTab(event.target.href);
+    //             }
+    //         });
+    //     })
+    // })
 
     tabs.push(tab)
 
@@ -163,6 +170,8 @@ async function addTab(link) {
 
     tabView.appendChild(tab.view)
     focusTab(tab)
+
+    saveTabs(tabs)
 }
 
 addTab('google.com')
