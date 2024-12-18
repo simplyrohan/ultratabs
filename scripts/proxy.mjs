@@ -37,14 +37,14 @@ export async function getUV(input) {
   let url = search(input, "https://www.google.com/search?q=%s");
 
   // let wispUrl = "wss://wisp.mercurywork.shop/wisp/"
-  let wispUrl = "wss://wisp.mercurywork.shop/wisp/"
+  let wispUrl = "ws://159.54.184.210:5000/wisp/"
 
-  if (await connection.getTransport() !== "/proxy/epoxy/index.mjs") {
-      await connection.setTransport("/proxy/epoxy/index.mjs", [{ wisp: wispUrl }]);
-  }
-  // if (await connection.getTransport() !== "/libcurl/libcurl.mjs") {
-  //   await connection.setTransport("/libcurl/libcurl.mjs", [{ wisp: wispUrl }]);
+  // if (await connection.getTransport() !== "/proxy/epoxy/index.mjs") {
+  //     await connection.setTransport("/proxy/epoxy/index.mjs", [{ wisp: wispUrl }]);
   // }
+  if (await connection.getTransport() !== "/proxy/libcurl/libcurl.mjs") {
+    await connection.setTransport("/proxy/libcurl/libcurl.mjs", [{ wisp: wispUrl }]);
+  }
 
   // let viewUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
   let viewUrl = scramjet.encodeUrl(url);

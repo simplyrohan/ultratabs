@@ -95,7 +95,7 @@ function tabFrame(tab) {
     return iframe({
         class: 'tab-frame',
         src: tab.proxiedUrl,
-        sandbox: 'allow-scripts allow-forms allow-same-origin',
+        // sandbox: 'allow-scripts allow-forms allow-same-origin',
         onload: (e) => {
             let parts = e.target.contentWindow.location.pathname.slice(1).split('/')
             // let targetUrl = decodeURIComponent(__uv$config.decodeUrl(parts[parts.length - 1]))
