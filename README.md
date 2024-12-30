@@ -13,10 +13,6 @@ To build the CSS, run
 ```
 sass styles/sass/:styles/css
 ```
-
-# Notes
-Yes, I know that its terrible to put the built JS files for UV, BareMux, Epoxy, etc. It makes it easier for testing, but I will do it better soon.
-
 # Bugs
 - [ ] Spotify login doesn't work (fix: switch to scramjet + unstable libcurl)
 

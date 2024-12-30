@@ -1,5 +1,5 @@
 import { getFavicon } from './utils.mjs';
-import { getUV, search } from './proxy.mjs'
+import { setTransport, setWisp, getProxied, makeURL } from '/lethal-js/lethal.mjs'
 
 const { span, iframe, button, img } = van.tags;
 const { tags: { "ion-icon": ionIcon } } = van;
@@ -149,12 +149,17 @@ function focusTab(tab) {
 async function addTab(link) {
     let url;
 
-    url = await getUV(link)
+    await setTransport('epoxy')
+    await setWisp('wss://wisp.mercurywork.shop/wisp/')
+    // url = await getUV(link)
+    console.log(makeURL(link))
+    url = await getProxied(makeURL(link))
 
     let tab = {} // We aren't populating this because it needs to be passed into the tabFrame and tabItem functions
 
     tab.title = 'Loading...'
-    tab.url = search(link)
+    // tab.url = search(link)
+    tab.url = makeURL(link)
     tab.proxiedUrl = url
     tab.icon = null
     tab.view = tabFrame(tab)
