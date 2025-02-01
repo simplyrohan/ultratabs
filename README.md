@@ -1,4 +1,4 @@
-<h1 align="center" style="font-size: 7rem">Ultratabs</h1>
+<h1 align="center">Ultratabs</h1>
 <p align="center">A powerful webproxy based on the Arc Browser</p>
 
 ![Ultraviolet](https://img.shields.io/badge/Ultraviolet-Powered-purple?style=for-the-badge)
